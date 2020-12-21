@@ -3,7 +3,8 @@ betfair_certificate_signing.txt
 betfair_creds.txt
 openssl.cnf
 Testing.ipynb
-
+outputs/*
+scorecasts/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
