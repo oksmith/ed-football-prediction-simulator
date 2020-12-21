@@ -49,8 +49,8 @@ def save_predictions_and_values(predictions, values):
     now = datetime.now().strftime('%Y%m%d%H%M%S')
 
     if not os.path.exists(os.path.join(os.getcwd(), OUTPUT_LOC)):
-        print('Creating `{}` directory'.format(OUTPUT_LOC))
-        os.makedirs(os.getcwd(), OUTPUT_LOC)
+        print('Creating `{}` directory.'.format(OUTPUT_LOC))
+        os.makedirs(os.path.join(os.getcwd(), OUTPUT_LOC))
 
     predictions_path = os.path.join(os.getcwd(), OUTPUT_LOC, 'predictions_{}.txt'.format(now))
     values_path = os.path.join(os.getcwd(), OUTPUT_LOC, 'values_{}.txt'.format(now))
@@ -66,3 +66,5 @@ def save_predictions_and_values(predictions, values):
 
     with open(values_path, 'w') as f:
         f.write('\n\n'.join(values_lines))
+
+    print('Saved predictions.')
