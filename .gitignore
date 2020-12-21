@@ -1,3 +1,10 @@
+# Custom files to ignore
+betfair_certificate_signing.txt
+betfair_creds.txt
+openssl.cnf
+Testing.ipynb
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
