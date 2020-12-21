@@ -3,6 +3,7 @@ betfair_certificate_signing.txt
 betfair_creds.txt
 openssl.cnf
 Testing.ipynb
+outputs/*
 scorecasts/*
 .idea/*
 
