@@ -1,5 +1,7 @@
 import numpy as np
 
+from scipy import stats
+
 from src.config import OUTCOMES, ADJUSTMENT
 
 
@@ -62,7 +64,7 @@ def get_expected_values(bf, n_samples=N_SAMPLES):
         match_values[event_name] = get_expected_value_single_match(bf, event_id, n_samples)
         suggested_predictions[event_name] = [
             key for key in match_values[event_name].keys()
-            if match_values[event_name][key] == max(match_values[event_name].values())
+            if match_values[event_name][key]['mean'] == max([val['mean'] for val in match_values[event_name].values()])
         ][0]
         
     return suggested_predictions, match_values
@@ -80,8 +82,19 @@ def get_expected_value_single_match(bf, event_id, n_samples=N_SAMPLES):
 
     for guess in OUTCOMES:
         if guess not in ['Any Other Home Win', 'Any Other Away Win', 'Any Other Draw']:
-            expected_value[guess] = np.mean(
+            mean_ev = np.mean(
                 [ed_scoring_value(guess, outcome) for outcome in simulated_outcomes]
             )
+            sem = stats.sem([ed_scoring_value(guess, outcome) for outcome in simulated_outcomes])
+
+            expected_value[guess] = {
+                'mean': mean_ev,
+                'upper': mean_ev + 2*sem,
+                'lower': mean_ev - 2*sem
+            }
     
     return expected_value
+
+
+def calculate_expected_score(suggested_predictions, match_values):
+    return sum([val[suggested_predictions[match]]['mean'] for match, val in match_values.items()])

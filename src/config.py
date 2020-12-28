@@ -63,5 +63,7 @@ TEAMS_DICT = {
     'RANG': 'Rangers',
     'MTHRWL': 'Motherwell',
     'ABRDN': 'Aberdeen',
-    
+    'BOU': 'Bournemouth',
+    'LUT': 'Luton Town',
+
 }
