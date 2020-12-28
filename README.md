@@ -4,12 +4,12 @@
 Approximately every week, a batch of 10 Premier League football fixtures is announced, but also occasionally the fixtures are from the Champions League, Europa League, Championship, Scottish PL etc. I need to provide predictions each week, and often I'm too lazy to research it, so this code was built to take Betfair odds and generate the best guess possible.
 
 Scoring system:
-8pts = Spot on (draw)
-7pts = Spot on
-5pts = Right result (draw)
-4pts = Right result with one team goal total correct
-3pts = Right result with no team goal total correct
-1pt = One team’s goal total correct (without getting the result right)
+* 8pts = Spot on (draw)
+* 7pts = Spot on
+* 5pts = Right result (draw)
+* 4pts = Right result with one team goal total correct
+* 3pts = Right result with no team goal total correct
+* 1pt = One team’s goal total correct (without getting the result right)
 
 ### What this repo does
 Script to:
