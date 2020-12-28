@@ -47,6 +47,7 @@ TEAMS_DICT = {
     'MANU': 'Man Utd',
     'NEW': 'Newcastle',
     'SHE': 'Sheff Utd',
+    'SHFU': 'Sheff Utd',
     'SOTN': 'Southampton',
     'TOTT': 'Tottenham',
     'WBA': 'West Brom',

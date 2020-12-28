@@ -14,7 +14,11 @@ def parse_fixtures(date=None):
         file_name = max([x[:-4] for x in os.listdir(SCORECASTS_LOC)]) + '.txt'
         
     with open('{}/{}'.format(SCORECASTS_LOC, file_name), 'r') as f:
-        fixtures = [[x.strip() for x in line.split(' - ')] for line in f.read().strip().split('\n')[1:]]
+        lines = f.read().strip().split('\n')
+        fixtures = [[x.strip() for x in line.split(' - ')] for line in lines
+                    if not (
+                'FIXTURES' in line or 'SCORES' in line
+                )]
         
     parsed_fixtures = [
         ' v '.join([TEAMS_DICT[f] for f in fixture]) for fixture in fixtures
