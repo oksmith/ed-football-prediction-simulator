@@ -18,9 +18,18 @@ def parse_fixtures(date=None):
         lines = f.read().strip().split('\n')
         fixtures = [[x.strip() for x in line.split(' - ')] for line in lines
                     if not (
-                'FIXTURES' in line or 'SCORES' in line
+                'FIXTURES' in line.upper() or 'SCORES' in line.upper()
                 )]
-        
+
+    missing_translations = []
+    for fixture in fixtures:
+        for f in fixture:
+            if f not in TEAMS_DICT.keys():
+                missing_translations.append(f)
+
+    if len(missing_translations) > 0:
+        raise RuntimeError('Need the Betfair translation of the following keys: {}'.format(missing_translations))
+
     parsed_fixtures = [
         ' v '.join([TEAMS_DICT[f] for f in fixture]) for fixture in fixtures
     ]

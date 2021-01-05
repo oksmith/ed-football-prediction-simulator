@@ -7,6 +7,8 @@ import numpy as np
 import betfairlightweight
 from betfairlightweight import filters
 
+from src.config import OUTCOMES
+
 
 pd.options.display.max_columns = 50
 
@@ -78,6 +80,13 @@ class BetfairPriceFetcher:
             
             # Scottish
             'Scottish Premiership',
+
+            # Italian
+            'Italian Serie A',
+
+            # Spanish
+            'Spanish La Liga',
+            'Spanish Copa del Rey',
 
         ])]
 
@@ -154,13 +163,18 @@ class BetfairPriceFetcher:
         # Get market catalogues
         market_catalogue_filter = filters.market_filter(
             market_ids=[market_id],
-            market_countries=['GB']
+            # market_countries=['GB' 'ES', 'IT', 'DE']
         )
         market_catalogue = self.trading.betting.list_market_catalogue(
             filter=market_catalogue_filter,
             market_projection=['RUNNER_DESCRIPTION'],
             max_results='100'
-        )[0]
+        )
+        if len(market_catalogue) == 0:
+            print('EMPTY! ', market_id, market_catalogue)
+            return None
+
+        market_catalogue = market_catalogue[0]
         runner_names = {
             r.selection_id: r.runner_name for r in market_catalogue.runners
         }
@@ -199,6 +213,7 @@ class BetfairPriceFetcher:
         })
     
     def get_odds(self):
+        print(self.matches_df)
         if not hasattr(self, 'market_id_dict'):
             self.fetch_market_id_dict()
             
@@ -207,30 +222,47 @@ class BetfairPriceFetcher:
 
             for market, market_id in self.market_id_dict[event_id].items():
                 odds = self.get_match_odds(market_id)
-                odds['Price'] = odds[['BestBackPrice', 'BestLayPrice']].mean(axis=1)
-                odds['Prob'] = 1 / odds['Price']
-                total_prob = odds['Prob'].sum()
-                odds['Prob'] = odds['Prob'] / total_prob
-
-                if market == 'Match Odds':
-                    match['Team1WinProb'] = odds.loc[odds.SelectionName == match.Team1, 'Prob'].values[0]
-                    match['Team2WinProb'] = odds.loc[odds.SelectionName == match.Team2, 'Prob'].values[0]
-                    match['DrawProb'] = odds.loc[odds.SelectionName == 'The Draw', 'Prob'].values[0]
-
-                elif market == 'Over/Under 1.5 Goals':
-                    for name in odds.SelectionName:
-                        match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
-
-                elif market == 'Over/Under 2.5 Goals':
-                    for name in odds.SelectionName:
-                        match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
-
-                elif market == 'Correct Score':
-                    for name in odds.SelectionName:
-                        match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
-
+                if odds is None:
+                    if market == 'Match Odds':
+                        match['Team1WinProb'] = np.nan
+                        match['Team2WinProb'] = np.nan
+                        match['DrawProb'] = np.nan
+                    elif market == 'Over/Under 1.5 Goals':
+                        match['Over 1.5 Goals'] = np.nan
+                        match['Under 1.5 Goals'] = np.nan
+                    elif market == 'Over/Under 2.5 Goals':
+                        match['Over 2.5 Goals'] = np.nan
+                        match['Under 2.5 Goals'] = np.nan
+                    elif market == 'Correct Score':
+                        for name in OUTCOMES:
+                            match[name] = np.nan
+                    else:
+                        raise ValueError('Unexpected market type! {}'.format(market))
                 else:
-                    raise ValueError('Unexpected market type! {}'.format(market))
+                    odds['Price'] = odds[['BestBackPrice', 'BestLayPrice']].mean(axis=1)
+                    odds['Prob'] = 1 / odds['Price']
+                    total_prob = odds['Prob'].sum()
+                    odds['Prob'] = odds['Prob'] / total_prob
+
+                    if market == 'Match Odds':
+                        match['Team1WinProb'] = odds.loc[odds.SelectionName == match.Team1, 'Prob'].values[0]
+                        match['Team2WinProb'] = odds.loc[odds.SelectionName == match.Team2, 'Prob'].values[0]
+                        match['DrawProb'] = odds.loc[odds.SelectionName == 'The Draw', 'Prob'].values[0]
+
+                    elif market == 'Over/Under 1.5 Goals':
+                        for name in odds.SelectionName:
+                            match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
+
+                    elif market == 'Over/Under 2.5 Goals':
+                        for name in odds.SelectionName:
+                            match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
+
+                    elif market == 'Correct Score':
+                        for name in odds.SelectionName:
+                            match[name] = odds.loc[odds.SelectionName == name, 'Prob'].values[0]
+
+                    else:
+                        raise ValueError('Unexpected market type! {}'.format(market))
 
             matches_with_odds[event_id] = match
             print('Fetched odds for {}.'.format(self.matches_df.loc[event_id, 'EventName']))
