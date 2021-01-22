@@ -67,6 +67,7 @@ class BetfairPriceFetcher:
             'English Championship',
             'English FA Cup',
             'English Football League Cup',
+            'EFL Trophy',
 
             # European competitions
             'UEFA Champions League',
@@ -213,7 +214,6 @@ class BetfairPriceFetcher:
         })
     
     def get_odds(self):
-        print(self.matches_df)
         if not hasattr(self, 'market_id_dict'):
             self.fetch_market_id_dict()
             
