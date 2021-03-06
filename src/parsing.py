@@ -78,7 +78,7 @@ def save_predictions_and_values(predictions, values):
             str(np.round(ev['mean'], 4)),
             str(np.round(ev['lower'], 4)),
             str(np.round(ev['upper'], 4))
-        ) for outcome, ev in value.items()]
+        ) for outcome, ev in sorted(value.items(), key=lambda x: -x[1]['mean'])]
         for key, value in values.items()
     ]
     values_lines = ['\n'.join(match) for match in values_lines]

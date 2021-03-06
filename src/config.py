@@ -142,4 +142,6 @@ TEAMS_DICT = {
     'BAYRN': 'Bayern Munich',
     'GILL': 'Gillingham',
     'BBRN': 'Blackburn',
+    'READ': 'Reading',
+    'SHFWD': 'Sheff Wed'
 }
