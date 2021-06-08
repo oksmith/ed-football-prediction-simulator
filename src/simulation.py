@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from scipy import stats
 
@@ -60,7 +61,9 @@ def get_expected_values(bf, n_samples=N_SAMPLES):
         event_name = bf.data.loc[event_id, 'EventName']
         print('Simulating outcomes for {}...'.format(event_name))
         if bf.data.loc[event_id, OUTCOMES].isnull().any():
-            pass
+            print('IGNORE {} - MISSING PROBABILITIES!'.format(bf.data.loc[event_id, 'EventName']))
+            continue
+
         match_values[event_name] = get_expected_value_single_match(bf, event_id, n_samples)
         suggested_predictions[event_name] = [
             key for key in match_values[event_name].keys()

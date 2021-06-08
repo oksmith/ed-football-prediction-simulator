@@ -18,7 +18,7 @@ def parse_fixtures(date=None):
         lines = f.read().strip().split('\n')
         fixtures = [[x.strip() for x in line.split(' - ')] for line in lines
                     if not (
-                'FIXTURES' in line.upper() or 'SCORES' in line.upper()
+                'FIXTURES' in line.upper() or 'SCORES' in line.upper() or 'EURO' in line.upper()
                 )]
 
     missing_translations = []

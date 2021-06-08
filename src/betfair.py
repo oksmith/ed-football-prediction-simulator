@@ -68,6 +68,8 @@ class BetfairPriceFetcher:
             'English FA Cup',
             'English Football League Cup',
             'EFL Trophy',
+            'English League 1',
+            'English League 2',
 
             # European competitions
             'UEFA Champions League',
@@ -76,8 +78,9 @@ class BetfairPriceFetcher:
             # International competitions
             'UEFA Nations League',
             # FIFA World Cup 2022,
-            # FIFA World Cup Qualifiers,
+            'FIFA World Cup Qualifiers',
             # International Friendlies,
+            'UEFA Euro 2020',
             
             # Scottish
             'Scottish Premiership',
