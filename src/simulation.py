@@ -48,7 +48,7 @@ def ed_scoring_value(guess, outcome):
             value = 7
         else:
             value = 8
-    elif (team1 == o_team1) or (team2 == o_team2):
+    elif (team1 == o_team1) or (team2 == o_team2) or (o_team1 - o_team2 == team1 - team2):
         value += 1
         
     return value

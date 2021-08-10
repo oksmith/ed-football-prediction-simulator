@@ -74,6 +74,8 @@ class BetfairPriceFetcher:
             # European competitions
             'UEFA Champions League',
             'UEFA Europa League',
+            'UEFA Super Cup',
+            'UEFA Europa League Qualifiers',
 
             # International competitions
             'UEFA Nations League',

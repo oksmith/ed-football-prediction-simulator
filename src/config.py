@@ -160,7 +160,7 @@ TEAMS_DICT = {
     'PORTO': 'Porto',
     'AJX': 'Ajax',
     'S.PRG': 'Slavia Prague',
-    'VLRL': 'Villarreal',
+    'VLLRL': 'Villarreal',
     'GRANADA': 'Granada',
     'DERB': 'Derby',
     'PRSTN': 'Preston',
@@ -179,6 +179,17 @@ TEAMS_DICT = {
     'OSASSNA': 'Osasuna',
     'ATH.BLB': 'Athletic Bilbao',
     'R.MAD': 'Real Madrid',
+    'SLFRD': 'Salford City',
+    'IPS': 'Ipswich',
+    'PBRGH': 'Peterborough',
+    'MALMO': 'Malmo FF',
+    'NTTM.F': 'Nottm Forest',
+    'BRDFD': 'Bradford',
+    'CEL': 'Celtic',
+    'JBLNC': 'Jablonec',
+
+
+
 
     # Internationals
     'BELG': 'Belgium',
@@ -228,6 +239,9 @@ TEAMS_DICT = {
     'SCO': 'Scotland',
     'CZE': 'Czech Republic',
     'SLVK': 'Slovakia',
-    'SWD': 'Sweden'
+    'SWD': 'Sweden',
+    'POR': 'Portugal',
+    'HUN': 'Hungary',
+    'SWE': 'Sweden',
 
 }
