@@ -74,6 +74,7 @@ class BetfairPriceFetcher:
             # European competitions
             'UEFA Champions League',
             'UEFA Europa League',
+            'UEFA Europa Conference League',
             'UEFA Super Cup',
             'UEFA Europa League Qualifiers',
 
@@ -81,9 +82,10 @@ class BetfairPriceFetcher:
             'UEFA Nations League',
             # FIFA World Cup 2022,
             'FIFA World Cup Qualifiers',
+            'FIFA World Cup Qualifiers - Europe',
             # International Friendlies,
             'UEFA Euro 2020',
-            
+
             # Scottish
             'Scottish Premiership',
 
