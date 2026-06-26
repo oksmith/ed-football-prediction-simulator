@@ -1,10 +1,7 @@
 import numpy as np
-import pandas as pd
-
 from scipy import stats
 
-from src.config import OUTCOMES, ADJUSTMENT
-
+from src.config import ADJUSTMENT, OUTCOMES
 
 N_SAMPLES = 50000
 

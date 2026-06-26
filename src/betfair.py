@@ -1,14 +1,13 @@
-import getpass
 import datetime
-
-import pandas as pd
-import numpy as np
+import getpass
+import pdb
 
 import betfairlightweight
+import numpy as np
+import pandas as pd
 from betfairlightweight import filters
 
 from src.config import OUTCOMES
-
 
 pd.options.display.max_columns = 50
 
@@ -81,6 +80,7 @@ class BetfairPriceFetcher:
             # International competitions
             'UEFA Nations League',
             # FIFA World Cup 2022,
+            'FIFA World Cup',
             'FIFA World Cup Qualifiers',
             'FIFA World Cup Qualifiers - Europe',
             # International Friendlies,
@@ -112,6 +112,8 @@ class BetfairPriceFetcher:
                 }
             )
         )
+        # print([e.event.name for e in events])
+        # pdb.set_trace()
 
         # Create a DataFrame with all the events by iterating over each event object
         football_events_next_week = pd.DataFrame({
@@ -120,6 +122,8 @@ class BetfairPriceFetcher:
             'OpenDate': [event_object.event.open_date for event_object in events],
             'MarketCount': [event_object.market_count for event_object in events],
         })
+        print(f"football_events_next_week: {football_events_next_week}")
+        # pdb.set_trace()
 
         matches_df = football_events_next_week.loc[
             football_events_next_week.EventName.str.split(' v ').str.len() > 1
@@ -130,7 +134,7 @@ class BetfairPriceFetcher:
         
         if fixtures_list:
             matches_df = matches_df.loc[matches_df.EventName.isin(fixtures_list)]
-
+        print(f"matches_df: {matches_df}")
         self.matches_df = matches_df.set_index('EventID')
         
     def fetch_single_event_market_ids(self, event_id):
@@ -274,4 +278,8 @@ class BetfairPriceFetcher:
             matches_with_odds[event_id] = match
             print('Fetched odds for {}.'.format(self.matches_df.loc[event_id, 'EventName']))
 
+        print(pd.DataFrame(matches_with_odds))
+
+        # pdb.set_trace()
+        self.data = pd.DataFrame(matches_with_odds).T[FINAL_COLUMN_ORDER]
         self.data = pd.DataFrame(matches_with_odds).T[FINAL_COLUMN_ORDER]

@@ -1,11 +1,11 @@
-from src.parsing import parse_fixtures, compile_suggested_predictions
 from src.betfair import BetfairPriceFetcher
+from src.parsing import compile_suggested_predictions, parse_fixtures
 from src.simulation import get_expected_values
-
 
 if __name__ == '__main__':
     # Parse latest date, unless a separate date is supplied
     fixtures, parsed_fixtures = parse_fixtures()
+    print(parsed_fixtures)
 
     # Fetch betting odds
     bf = BetfairPriceFetcher()

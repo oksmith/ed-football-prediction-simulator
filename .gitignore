@@ -1,4 +1,6 @@
 # Custom files to ignore
+client-2048.key
+client-2048.crt
 betfair_certificate_signing.txt
 betfair_creds.txt
 openssl.cnf
