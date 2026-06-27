@@ -7,6 +7,9 @@ import pandas as pd
 from betfairlightweight import filters
 
 from src.config import COMPETITIONS, OUTCOMES
+from src.logger import get_logger
+
+logger = get_logger()
 
 pd.options.display.max_columns = 50
 
@@ -94,158 +97,6 @@ class BetfairClient:
         )
 
 
-# class BetfairPriceFetcher:
-#     def __init__(self):
-#         self.trading = betfairlightweight.APIClient(**_get_credentials())
-#         self.trading.login()
-
-#         self.matches_df = None
-#         self.data = None
-
-#     def get_competition_ids(self, to_date):
-#         competition_filter = filters.market_filter(
-#             event_type_ids=[SOCCER_ID],
-#             market_start_time={
-#                 'to': to_date
-#             })
-
-#         # Get a list of competitions for soccer
-#         competitions = self.trading.betting.list_competitions(
-#             filter=competition_filter
-#         )
-
-#         # Iterate over the competitions and create a dataframe of competitions and competition ids
-#         soccer_competitions = pd.DataFrame({
-#             'Competition': [competition_object.competition.name for competition_object in competitions],
-#             'ID': [competition_object.competition.id for competition_object in competitions]
-#         })
-
-#         return soccer_competitions.loc[soccer_competitions.Competition.isin(COMPETITIONS)]
-
-#     def get_next_week_matches(self, fixtures_list=None):
-#         # Get a datetime object in a week and convert to string
-#         datetime_in_a_week = (datetime.datetime.utcnow() + datetime.timedelta(weeks=1)).strftime("%Y-%m-%dT%TZ")
-
-#         competitions = self.get_competition_ids(datetime_in_a_week)
-
-#         events = self.trading.betting.list_events(
-#             filter=filters.market_filter(
-#                 competition_ids=competitions.ID.tolist(),
-#                 market_start_time={
-#                     'to': (datetime.datetime.utcnow() + datetime.timedelta(weeks=1)).strftime("%Y-%m-%dT%TZ")
-#                 }
-#             )
-#         )
-
-#         # Create a DataFrame with all the events by iterating over each event object
-#         football_events_next_week = pd.DataFrame({
-#             'EventName': [event_object.event.name for event_object in events],
-#             'EventID': [event_object.event.id for event_object in events],
-#             'OpenDate': [event_object.event.open_date for event_object in events],
-#             'MarketCount': [event_object.market_count for event_object in events],
-#         })
-#         print(f"football_events_next_week: {football_events_next_week}")
-
-#         matches_df = football_events_next_week.loc[
-#             football_events_next_week.EventName.str.split(' v ').str.len() > 1
-#         ].sort_values('OpenDate')
-
-#         matches_df['Team1'] = matches_df.EventName.str.split(' v ').str[0]
-#         matches_df['Team2'] = matches_df.EventName.str.split(' v ').str[1]
-
-#         if fixtures_list:
-#             matches_df = matches_df.loc[matches_df.EventName.isin(fixtures_list)]
-#         print(f"matches_df: {matches_df}")
-#         self.matches_df = matches_df.set_index('EventID')
-
-#     def fetch_single_event_market_ids(self, event_id):
-#         market_catalogues = self.trading.betting.list_market_catalogue(
-#             filter=filters.market_filter(event_ids=[event_id]),
-#             max_results='1000',
-#         )
-
-#         return {
-#             market_cat_object.market_name: market_cat_object.market_id
-#             for market_cat_object in market_catalogues
-#             if market_cat_object.market_name in [
-#                 'Match Odds',
-#                 'Correct Score',
-#                 'Over/Under 1.5 Goals',
-#                 'Over/Under 2.5 Goals'
-#             ]
-#         }
-
-#     def fetch_market_id_dict(self):
-#         self.market_id_dict = {
-#             event_id: self.fetch_single_event_market_ids(event_id=event_id)
-#             for event_id in self.matches_df.index.unique()
-#         }
-
-#     def get_price(self, runner, kind):
-#         try:
-#             if kind == 'back':
-#                 return runner.ex.available_to_back[0].price
-#             else:
-#                 assert kind == 'lay', 'Need price kind either `back` or `lay`'
-#                 return runner.ex.available_to_lay[0].price
-#         except IndexError:
-#             return np.inf
-
-#     def get_match_odds(self, market_id):
-
-#         # Get market catalogues
-#         market_catalogue_filter = filters.market_filter(
-#             market_ids=[market_id],
-#             # market_countries=['GB' 'ES', 'IT', 'DE']
-#         )
-#         market_catalogue = self.trading.betting.list_market_catalogue(
-#             filter=market_catalogue_filter,
-#             market_projection=['RUNNER_DESCRIPTION'],
-#             max_results='100'
-#         )
-#         if len(market_catalogue) == 0:
-#             print('EMPTY! ', market_id, market_catalogue)
-#             return None
-
-#         market_catalogue = market_catalogue[0]
-#         runner_names = {
-#             r.selection_id: r.runner_name for r in market_catalogue.runners
-#         }
-
-#         # Request market books
-#         market_books = self.trading.betting.list_market_book(
-#             market_ids=[market_id],
-#             price_projection=filters.price_projection(
-#                 price_data=['EX_BEST_OFFERS']
-#             )
-#         )
-
-#         assert len(market_books) == 1
-
-#         book = market_books[0]
-#         assert book.number_of_winners == 1
-
-#         runners = book.runners
-
-#         # Extract prices
-#         best_back_prices = [self.get_price(runner, kind='back') for runner in runners]
-#         best_lay_prices = [self.get_price(runner, kind='lay') for runner in runners]
-
-#         selection_ids = [runner.selection_id for runner in runners]
-#         statuses = [runner.status for runner in runners]
-
-#         runner_names = [runner_names[selection_id] for selection_id in selection_ids]
-
-#         return pd.DataFrame({
-#             'MarketID': [market_id]*len(selection_ids),
-#             'SelectionID': selection_ids,
-#             'SelectionName': runner_names,
-#             'BestBackPrice': best_back_prices,
-#             'BestLayPrice': best_lay_prices,
-#             'Status': statuses,
-#         })
-
-
 def _one_week_from_now() -> str:
     return (datetime.datetime.utcnow() + datetime.timedelta(weeks=1)).strftime("%Y-%m-%dT%TZ")
 
@@ -309,7 +160,7 @@ def get_market_odds(client: BetfairClient, market_id: str) -> pd.DataFrame | Non
         max_results=100,
     )
     if not catalogue:
-        print(f"Empty catalogue for market {market_id}")
+        logger.error(f"Empty catalogue for market {market_id}")
         return None
 
     runner_names = {r.selection_id: r.runner_name for r in catalogue[0].runners}
@@ -384,6 +235,6 @@ def get_odds(client: BetfairClient, matches: pd.DataFrame) -> pd.DataFrame:
             values.update(_extract_market_values(market, odds, match))
 
         rows[event_id] = values
-        print(f"Fetched odds for {match.EventName}")
+        logger.info(f"Fetched odds for {match.EventName}")
 
     return pd.DataFrame(rows).T[FINAL_COLUMN_ORDER]

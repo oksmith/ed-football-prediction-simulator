@@ -4,7 +4,10 @@ from datetime import datetime
 import numpy as np
 
 from src.config import OUTPUT_LOC, SCORECASTS_LOC, TEAMS_MAP
+from src.logger import get_logger
 from src.simulation import calculate_expected_score
+
+logger = get_logger()
 
 
 def parse_fixtures(date=None):
@@ -44,10 +47,10 @@ def compile_suggested_predictions(fixtures, suggested_predictions, match_values)
     results = {fixture: suggested_predictions[fixture].replace(" ", "") for fixture in parsed_fixtures}
     predictions = [(" " + results[fixture] + " ").join(fixtures[i]) for i, fixture in enumerate(parsed_fixtures)]
 
-    print("PREDICTIONS:")
+    logger.info("PREDICTIONS:")
     _ = [print(line) for line in predictions]
 
-    print("EXPECTED SCORECAST SCORE: {}".format(calculate_expected_score(suggested_predictions, match_values)))
+    logger.info("EXPECTED SCORECAST SCORE: {}".format(calculate_expected_score(suggested_predictions, match_values)))
 
     save_predictions_and_values(predictions, match_values)
 
@@ -57,7 +60,7 @@ def save_predictions_and_values(predictions, values):
     today = datetime.now().strftime("%Y-%m-%d")
 
     if not os.path.exists(os.path.join(os.getcwd(), OUTPUT_LOC)):
-        print("Creating `{}` directory.".format(OUTPUT_LOC))
+        logger.info("Creating `{}` directory.".format(OUTPUT_LOC))
         os.makedirs(os.path.join(os.getcwd(), OUTPUT_LOC))
 
     predictions_path = os.path.join(os.getcwd(), OUTPUT_LOC, "{}_predictions_{}.txt".format(today, now))
@@ -80,5 +83,3 @@ def save_predictions_and_values(predictions, values):
 
     with open(values_path, "w") as f:
         f.write("\n\n".join(values_lines))
-
-    print("Saved predictions.")

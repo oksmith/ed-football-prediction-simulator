@@ -3,6 +3,9 @@ import pandas as pd
 from scipy import stats
 
 from src.config import ADJUSTMENT, OUTCOMES
+from src.logger import get_logger
+
+logger = get_logger()
 
 N_SAMPLES = 50000
 
@@ -68,9 +71,9 @@ def get_expected_values(data: pd.DataFrame, n_samples: int = N_SAMPLES):
     suggested_predictions = {}
     for event_id in data.index:
         event_name = data.loc[event_id, "EventName"]
-        print("Simulating outcomes for {}...".format(event_name))
+        logger.info("Simulating outcomes for {}...".format(event_name))
         if data.loc[event_id, OUTCOMES].isnull().any():
-            print("IGNORE {} - MISSING PROBABILITIES!".format(data.loc[event_id, "EventName"]))
+            logger.warn("IGNORE {} - MISSING PROBABILITIES!".format(data.loc[event_id, "EventName"]))
             continue
 
         match_values[event_name] = get_expected_value_single_match(data, event_id, n_samples)
