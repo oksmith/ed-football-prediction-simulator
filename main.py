@@ -6,10 +6,9 @@ from src.simulation import get_expected_values
 logger = get_logger()
 
 if __name__ == "__main__":
-    # Parse latest date, unless a separate date is supplied
     fixtures, parsed_fixtures = parse_fixtures()
-    logger.info(parsed_fixtures)
 
+    # Fetch Betfair information
     client = BetfairClient()
     matches = get_matches(client, fixtures_list=parsed_fixtures)
     df = get_odds(client, matches)
