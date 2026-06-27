@@ -13,6 +13,8 @@ def ed_scoring_value(guess, outcome):
     draw = team1 == team2
     lose = team1 < team2
 
+    # First handle the more extreme outcomes that are outside of the Betfair expected values
+    # i.e. scores higher than 4
     if outcome == "Any Other Home Win":
         # TODO: tweak this to adjust probability of opposition scoring? Eg. 4-1, 5-1, 4-3
         if win:
@@ -36,23 +38,32 @@ def ed_scoring_value(guess, outcome):
         o_lose = o_team1 < o_team2
 
     value = 0
+
+    # Assign a "base" value, which is 3 for win and 5 for a draw
     if (win and o_win) or (lose and o_lose):
         value = 3
     elif draw and o_draw:
         value = 5
 
+    # Override if the guess was exactly correct
     if (team1 == o_team1) and (team2 == o_team2):
         if o_win or o_lose:
             value = 7
         else:
             value = 8
-    elif (team1 == o_team1) or (team2 == o_team2) or (o_team1 - o_team2 == team1 - team2):
-        value += 1
+    elif (win and o_win) or (lose and o_lose):
+        # Right result (non-draw) bonus conditions
+        if (team1 == o_team1) or (team2 == o_team2) or (o_team1 - o_team2 == team1 - team2):
+            value = 4
+    elif draw and o_draw:
+        value = 5  # no bonus possible on draws short of exact score
+    elif (team1 == o_team1) or (team2 == o_team2):
+        value = 1  # one team correct, wrong result
 
     return value
 
 
-def get_expected_values(data: pd.DataFrame, n_samples=N_SAMPLES):
+def get_expected_values(data: pd.DataFrame, n_samples: int = N_SAMPLES):
     match_values = {}
     suggested_predictions = {}
     for event_id in data.index:
@@ -72,7 +83,7 @@ def get_expected_values(data: pd.DataFrame, n_samples=N_SAMPLES):
     return suggested_predictions, match_values
 
 
-def get_expected_value_single_match(data, event_id, n_samples=N_SAMPLES):
+def get_expected_value_single_match(data: pd.DataFrame, event_id, n_samples: int = N_SAMPLES):
     outcome_probabilities = dict(data.loc[event_id, OUTCOMES])
     simulated_outcomes = np.random.choice(
         OUTCOMES, n_samples, p=[outcome_probabilities[outcome] for outcome in OUTCOMES]
