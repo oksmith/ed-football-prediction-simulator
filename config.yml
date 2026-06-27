@@ -1,0 +1,375 @@
+# Team abbreviation → full name
+# Multiple abbreviations per team are intentional — they reflect
+# different source formats encountered in historical data.
+
+teams:
+  ARS:   Arsenal
+  VIL:   Aston Villa
+  BOU:   Bournemouth
+  BMTH:  Bournemouth
+  BRI:   Brighton
+  BUR:   Burnley
+  CHE:   Chelsea
+  CRY:   Crystal Palace
+  EVE:   Everton
+  FUL:   Fulham
+  LDS:   Leeds
+  LEIC:  Leicester
+  LIV:   Liverpool
+  MANC:  Man City
+  MANU:  Man Utd
+  NEW:   Newcastle
+  SHE:   Sheff Utd
+  SHFU:  Sheff Utd
+  SOTN:  Southampton
+  TOTT:  Tottenham
+  WBA:   West Brom
+  WHU:   West Ham
+  WLV:   Wolves
+  BRENT: Brentford
+  WAT:   Watford
+  N.FR:  Nottm Forest
+  N.FRST: Nottm Forest
+  N.FOR: Nottm Forest
+  NTM.F: Nottm Forest
+  NTTM.F: Nottm Forest
+
+  STK:     Stoke
+  QPR:     QPR
+  SUN:     Sunderland
+  PTRB:    Peterborough
+  PBR:     Peterborough
+  PTRBR:   Peterborough
+  SWAN:    Swansea
+  SWANS:   Swansea
+  BARN:    Barnsley
+  BARNS:   Barnsley
+  CARD:    Cardiff
+  CRDF:    Cardiff
+  SHRW:    Shrewsbury
+  SHREW:   Shrewsbury
+  WIM:     AFC Wimbledon
+  DRBY:    Derby
+  DERB:    Derby
+  CHRLY:   Chorley
+  BLPL:    Blackpool
+  BLP:     Blackpool
+  BLKPL:   Blackpool
+  PLY:     Plymouth
+  PLYM:    Plymouth
+  DONC:    Doncaster
+  DON:     Doncaster
+  CHLT:    Cheltenham
+  CHELT:   Cheltenham
+  LUT:     Luton
+  LTN:     Luton
+  LUTN:    Luton
+  WYC:     Wycombe
+  LINC:    Lincoln
+  LINCN:   Lincoln
+  MIL:     Millwall
+  MILL:    Millwall
+  MLWL:    Millwall
+  BORO:    Middlesborough
+  MID:     Middlesborough
+  BFRD:    Brentford
+  BRNT:    Brentford
+  BRNTFD:  Brentford
+  BREN:    Brentford
+  BRE:     Brentford
+  RDNG:    Reading
+  READ:    Reading
+  SWIN:    Swindon
+  HUL:     Hull
+  P.VLE:   Port Vale
+  PRT.VL:  Port Vale
+  BR.CTY:  Bristol City
+  B.CTY:   Bristol City
+  BRSTL.C: Bristol City
+  BRST.C:  Bristol City
+  BRS.CTY: Bristol City
+  MRCMB:   Morecambe
+  MORC:    Morecambe
+  CRWLY:   Crawley Town
+  MARINE:  Marine FC
+  NWPRT:   Newport County
+  ROTH:    Rotherham
+  BIRM:    Birmingham
+  MK.DNS:  MK Dons
+  STCKPRT: Stockport
+  IPS:     Ipswich
+  BRDFD:   Bradford
+  PRES:    Preston
+  PREST:   Preston
+  BURT:    Burton Albion
+  ACC:     Accrington
+  CHARL:   Charlton
+  CHAR:    Charlton
+  SHF.W:   Sheff Wed
+  SHF.WD:  Sheff Wed
+  SHFWD:   Sheff Wed
+  HUD:     Huddersfield
+  STHND:   Southend
+  CRLSLE:  Carlisle
+  WIG:     Wigan
+  GILL:    Gillingham
+  BBRN:    Blackburn
+  SALF:    Salford City
+  SLFRD:   Salford City
+  TRAN:    Tranmere
+  HARR:    Harrogate Town
+  EXTER:   Exeter City
+  EXTR:    Exeter City
+  HRTLPL:  Hartlepool
+  BOL:     Bolton
+  BOLT:    Bolton
+  SUTTN:   Sutton Utd
+  COLCH:   Colchester
+  CHEST:   Chesterfield
+  FLTWD:   Fleetwood Town
+  COV:     Coventry
+  OXF:     Oxford Utd
+  CAM:     Cambridge Utd
+  OLD:     Oldham
+  BHM.WD:  Boreham Wood
+  LIVI:    Livingston
+  CELT:    Celtic
+  CEL:     Celtic
+  ROSS:    Ross Co
+  ROSS.C:  Ross County
+  HIBS:    Hibernian
+  HIB:     Hibernian
+  ST.MRN:  St Mirren
+  ST.MRRN: St Mirren
+  ST.J:    St Johnstone
+  ST.JHNS: St Johnstone
+  RANG:    Rangers
+  MTHRWL:  Motherwell
+  ABRDN:   Aberdeen
+  HRTS:    Hearts
+  LVSTN:   Livingston
+  LVNGSTN: Livingston
+  AT.MD:     Atletico Madrid
+  A.MDRD:    Atletico Madrid
+  AT.MAD:    Atletico Madrid
+  AT.BLBAO:  Athletic Bilbao
+  ATH.BLB:   Athletic Bilbao
+  BARC:      Barcelona
+  BAR:       Barcelona
+  Y.DPRTVO:  Yeclano Deportivo
+  VLNCIA:    Valencia
+  LAS.ROZAS: CD Las Rozas
+  EIBAR:     Eibar
+  CRNELLA:   Cornella
+  SVL:       Sevilla
+  SVLLA:     Sevilla
+  R.SOC:     Sociedad
+  VLRL:      Villarreal
+  VILLRL:    Villarreal
+  OSASSNA:   Osasuna
+  LVNTE:     Levante
+  GRANADA:   Granada
+  GRNDA:     Granada
+  R.BTIS:    Betis
+  R.MDR:     Real Madrid
+  R.MDRD:    Real Madrid
+  R.MD:      Real Madrid
+  R.MAD:     Real Madrid
+  CRTNE:   Crotone
+  ROMA:    Roma
+  NAP:     Napoli
+  SPEZIA:  Spezia
+  AC.MLN:  AC Milan
+  JUV:     Juventus
+  SMPD:    Sampdoria
+  I.MLAN:  Inter
+  INTER:   Inter
+  INTR.M:  Inter
+  LZIO:    Lazio
+  ATLNTA:  Atalanta
+  ATALNTA: Atalanta
+  ATLNT:   Atalanta
+  PLMRS:   SE Palmeiras
+  B.MNCH:  Bayern Munich
+  BYRN:    Bayern Munich
+  B.LVRKSN: Leverkusen
+  DORT:    Dortmund
+  B.DTMND: Dortmund
+  B.DRT:   Dortmund
+  LPZG:    RB Leipzig
+  B.MGDBC: Mgladbach
+  PSG:   Paris St-G
+  RNNS:  Rennes
+  LYON:  Lyon
+  LILLE: Lille
+  PRTO:   Porto
+  PORTO:  Porto
+  BNFCA:  Benfica
+  SPRTNG: Sporting Lisbon
+  SLV.PRG:  Slavia Prague
+  S.PRGUE:  Slavia Prague
+  S.PRG:    Slavia Prague
+  SP.PRG:   Sparta Prague
+  JBLNC:    Jablonec
+  AJX:      Ajax
+  AZ.ALK:   AZ Alkmaar
+  Y.BOYS:   Young Boys
+  ZENIT:    Zenit St Petersburg
+  D.KYIV:   Dynamo Kiev
+  LG.WRSW:  Legia Warsaw
+  R.VIENNA: Rapid Vienna
+  WLFSBRGR: Wolfsberger AC
+  MURA:     Mura
+  CLB.BRG:  Club Brugge
+  BRGGE:    Club Brugge
+  SHRIF:    Sheriff Tiraspol
+  SHKTR.D:  Shakhtar
+  MLMO:     Malmo FF
+  MALMO:    Malmo FF
+  VITESS:   Vitesse
+  BRNDBY:   Brondby
+  BRNBY:    Brondby
+  GENK:     Genk
+  FRNCVRS:  Ferencvaros
+  SPRTK.M:  Spartak Moscow
+  DZGRB:    Dinamo Zagreb
+  OLYMP:    Olympiakos
+  RAND:     Randers
+  SLZBRG:   Red Bull Salzburg
+
+  ENG:     England
+  WAL:     Wales
+  SCO:     Scotland
+  SCOT:    Scotland
+  N.IRE:   Northern Ireland
+  REP.IRE: Republic of Ireland
+  GER:   Germany
+  FRA:   France
+  SPA:   Spain
+  ITA:   Italy
+  NED:   Netherlands
+  NETH:  Netherlands
+  BEL:   Belgium
+  BELG:  Belgium
+  POR:   Portugal
+  PRT:   Portugal
+  PORT:  Portugal
+  SWI:   Switzerland
+  AUS:   Austria
+  AUST:  Austria
+  AUSTRIA: Austria
+  DEN:   Denmark
+  FIN:   Finland
+  SWE:   Sweden
+  SWD:   Sweden
+  SWED:  Sweden
+  NOR:   Norway
+  NORW:  Norway
+  ICE:   Iceland
+  LUX:   Luxembourg
+  ANDORA: Andorra
+  LIECH: Liechtenstein
+  GIB:   Gibraltar
+  MALT:  Malta
+  CYP:   Cyprus
+  S.MRNO: San Marino
+  SAN.M: San Marino
+  TUR:   Turkey
+  TURK:  Türkiye
+  GRE:   Greece
+  CRO:   Croatia
+  BOS:   Bosnia
+  SERB:  Serbia
+  MONT:  Montenegro
+  ALB:   Albania
+  N.MAC: North Macedonia
+  KOSOVO: Kosovo
+  KOS:   Kosovo
+  ROM:   Romania
+  BUL:   Bulgaria
+  BLG:   Bulgaria
+  BULG:  Bulgaria
+  POL:   Poland
+  CZE:   Czechia
+  CZEC:  Czech Republic
+  SLVK:  Slovakia
+  HUN:   Hungary
+  RUS:   Russia
+  BLRS:  Belarus
+  UKR:   Ukraine
+  LITH:  Lithuania
+  LAT:   Latvia
+  EST:   Estonia
+  MOLD:  Moldova
+  ARM:   Armenia
+  GEO:   Georgia
+  GEOR:  Georgia
+  AZRB:  Azerbaijan
+  AZER:  Azerbaijan
+  KZK:   Kazakhstan
+  KAZ:   Kazakhstan
+  ISRL:  Israel
+  FAROES: Faroe Islands
+  FROES:  Faroe Islands
+  CAN:   Canada
+  USA:   USA
+  MEX:   Mexico
+  BRA:   Brazil
+  ARG:   Argentina
+  URUG:  Uruguay
+  PARA:  Paraguay
+  PARAG: Paraguay
+  ECU:   Ecuador
+  ECUAD: Ecuador
+  COLOM: Colombia
+  HAIT:  Haiti
+  PAN:   Panama
+  CURAC: Curacao
+  QTR:   Qatar
+  SAUDI: Saudi Arabia
+  S.ARB: Saudi Arabia
+  IRAN:  Iran
+  IRAQ:  Iraq
+  JORD:  Jordan
+  JAP:   Japan
+  SKR:   South Korea
+  S.KR:  South Korea
+  OZ:    Australia
+  NEWZ:  New Zealand
+  UZBK:  Uzbekistan
+  MOROC:  Morocco
+  EGY:    Egypt
+  ALG:    Algeria
+  TUNS:   Tunisia
+  TUNIS:  Tunisia
+  SEN:    Senegal
+  GHAN:   Ghana
+  IV.CST: Ivory Coast
+  IVCCST: Ivory Coast
+  CONG:   DR Congo
+  S.AFR:  South Africa
+  CVRD:   Cape Verde
+  C.VRD:  Cape Verde
+
+competitions:
+  - English Premier League
+  # - English Championship
+  # - English FA Cup
+  # - English Football League Cup
+  # - EFL Trophy
+  # - English League 1
+  # - English League 2
+  # - UEFA Champions League
+  # - UEFA Europa League
+  # - UEFA Europa Conference League
+  # - UEFA Super Cup
+  # - UEFA Europa League Qualifiers
+  # - UEFA Nations League
+  - FIFA World Cup
+  # - FIFA World Cup Qualifiers
+  # - FIFA World Cup Qualifiers - Europe
+  # - UEFA Euro 2020
+  # - Scottish Premiership
+  # - Italian Serie A
+  # - Spanish La Liga
+  # - Spanish Copa del Rey

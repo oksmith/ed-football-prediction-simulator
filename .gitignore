@@ -8,6 +8,7 @@ Testing.ipynb
 outputs/*
 scorecasts/*
 .idea/*
+.ruff_cache/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
