@@ -41,7 +41,7 @@ def _resolve_fixture_file(date: str | None, scorecasts_loc: str) -> Path:
     if not txt_files:
         raise FileNotFoundError(f"No fixture files found in {loc.resolve()}")
     latest = max(txt_files)
-    logger.warning("No date provided — using latest fixture file: %s.txt", latest)
+    logger.warning(f"No date provided — using latest fixture file: {latest}.txt")
     return loc / f"{latest}.txt"
 
 
@@ -60,7 +60,7 @@ def parse_fixtures(
     teams_map: dict[str, str] = TEAMS_MAP,
 ) -> tuple[list[list[str]], list[str]]:
     path = _resolve_fixture_file(date, scorecasts_loc)
-    logger.info("Parsing fixtures from %s", path)
+    logger.info(f"Parsing fixtures from {path}")
 
     raw_lines = path.read_text().strip().splitlines()
 
@@ -85,7 +85,7 @@ def parse_fixtures(
         )
 
     parsed_fixtures = [" v ".join(teams_map[abbr] for abbr in fixture) for fixture in fixtures]
-    logger.info("Parsed fixtures: %s", parsed_fixtures)
+    logger.info(f"Parsed fixtures: {parsed_fixtures}")
 
     return fixtures, parsed_fixtures
 

@@ -1,4 +1,5 @@
 import datetime
+from typing import Literal
 
 # import getpass
 import betfairlightweight
@@ -11,7 +12,9 @@ from src.logger import get_logger
 
 logger = get_logger()
 
-pd.options.display.max_columns = 50
+
+MarketName = Literal["Match Odds", "Correct Score", "Over/Under 1.5 Goals", "Over/Under 2.5 Goals"]
+
 
 SECRETS = "betfair_creds.txt"
 
@@ -32,31 +35,17 @@ FINAL_COLUMN_ORDER = [
     "Under 1.5 Goals",
     "Over 2.5 Goals",
     "Under 2.5 Goals",
-    "0 - 0",
-    "0 - 1",
-    "0 - 2",
-    "0 - 3",
-    "1 - 0",
-    "1 - 1",
-    "1 - 2",
-    "1 - 3",
-    "2 - 0",
-    "2 - 1",
-    "2 - 2",
-    "2 - 3",
-    "3 - 0",
-    "3 - 1",
-    "3 - 2",
-    "3 - 3",
-    "Any Other Home Win",
-    "Any Other Away Win",
-    "Any Other Draw",
+    *OUTCOMES,
 ]
 
 
+# TODO: this is fragile, do it better e.g. dotenv secrets
 def _get_credentials():
     with open(SECRETS, "r") as f:
         secrets = [str(line).strip("\n").strip() for line in f.readlines()]
+
+    if len(secrets) < 4:
+        raise ValueError(f"Expected 4 lines in {SECRETS} (username, password, app_key, certs), got {len(secrets)}")
 
     return {
         "username": secrets[0],
@@ -137,7 +126,7 @@ def get_matches(client: BetfairClient, fixtures_list: list | None = None) -> pd.
     return df.set_index("EventID")
 
 
-def get_market_ids(client: BetfairClient, event_id: str) -> dict[str, str]:
+def get_market_ids(client: BetfairClient, event_id: MarketName) -> dict[MarketName, str]:
     catalogues = client.list_market_catalogue(
         filter=filters.market_filter(event_ids=[event_id]),
         max_results=1000,
@@ -166,9 +155,12 @@ def get_market_odds(client: BetfairClient, market_id: str) -> pd.DataFrame | Non
     runner_names = {r.selection_id: r.runner_name for r in catalogue[0].runners}
 
     books = client.list_market_book(market_ids=[market_id])
-    assert len(books) == 1
+    if len(books) != 1:
+        raise ValueError(f"Expected 1 market book for {market_id}, got {len(books)}")
+
     book = books[0]
-    assert book.number_of_winners == 1
+    if book.number_of_winners != 1:
+        raise ValueError(f"Expected 1 winner for {market_id}, got {book.number_of_winners}")
 
     runners = book.runners
     selection_ids = [r.selection_id for r in runners]
@@ -197,8 +189,7 @@ def _prob(odds: pd.DataFrame, name: str) -> float:
     return odds.loc[odds.SelectionName == name, "Prob"].values[0]
 
 
-def _extract_market_values(market: str, odds: pd.DataFrame | None, match: pd.Series) -> dict:
-    """Return a flat dict of column → value for one market."""
+def _extract_market_values(market: str, odds: pd.DataFrame | None, match: pd.Series) -> dict[str, float]:
     if odds is None:
         null = {
             "Match Odds": {"Team1WinProb": np.nan, "Team2WinProb": np.nan, "DrawProb": np.nan},

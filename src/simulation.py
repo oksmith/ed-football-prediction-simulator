@@ -1,9 +1,28 @@
+from typing import TypedDict
+
 import numpy as np
 import pandas as pd
 from scipy import stats
 
 from src.config import ADJUSTMENT, OUTCOMES
 from src.logger import get_logger
+
+
+class OutcomeEV(TypedDict):
+    mean: float
+    upper: float
+    lower: float
+
+
+# e.g. {"1 - 0": {"mean": 3.2, "upper": 3.5, "lower": 2.9}, ...}
+MatchEV = dict[str, OutcomeEV]
+
+# e.g. {"Arsenal v Chelsea": {"1 - 0": {...}, ...}, ...}
+MatchValues = dict[str, MatchEV]
+
+# e.g. {"Arsenal v Chelsea": "1 - 0", ...}
+SuggestedPredictions = dict[str, str]
+
 
 logger = get_logger()
 
@@ -69,24 +88,26 @@ def ed_scoring_value(guess, outcome):
 def get_expected_values(data: pd.DataFrame, n_samples: int = N_SAMPLES):
     match_values = {}
     suggested_predictions = {}
-    for event_id in data.index:
-        event_name = data.loc[event_id, "EventName"]
-        logger.info("Simulating outcomes for {}...".format(event_name))
-        if data.loc[event_id, OUTCOMES].isnull().any():
-            logger.warn("IGNORE {} - MISSING PROBABILITIES!".format(data.loc[event_id, "EventName"]))
-            continue
 
+    for event_id, row in data.iterrows():
+        event_name = row["EventName"]
+        if row[OUTCOMES].isnull().any():
+            logger.warning(f"Skipping {event_name} — missing probabilities")
+            continue
+        logger.info(f"Simulating outcomes for {event_name}...")
         match_values[event_name] = get_expected_value_single_match(data, event_id, n_samples)
-        suggested_predictions[event_name] = [
-            key
-            for key in match_values[event_name].keys()
-            if match_values[event_name][key]["mean"] == max([val["mean"] for val in match_values[event_name].values()])
-        ][0]
+        suggested_predictions[event_name] = max(
+            match_values[event_name], key=lambda k: match_values[event_name][k]["mean"]
+        )
 
     return suggested_predictions, match_values
 
 
 def get_expected_value_single_match(data: pd.DataFrame, event_id, n_samples: int = N_SAMPLES):
+    """
+    Apply Monte Carlo simulation and calculate expected value estimates from each of the potential
+    guesses.
+    """
     outcome_probabilities = dict(data.loc[event_id, OUTCOMES])
     simulated_outcomes = np.random.choice(
         OUTCOMES, n_samples, p=[outcome_probabilities[outcome] for outcome in OUTCOMES]
@@ -94,15 +115,20 @@ def get_expected_value_single_match(data: pd.DataFrame, event_id, n_samples: int
 
     expected_value = {}
 
-    for guess in OUTCOMES:
-        if guess not in ["Any Other Home Win", "Any Other Away Win", "Any Other Draw"]:
-            mean_ev = np.mean([ed_scoring_value(guess, outcome) for outcome in simulated_outcomes])
-            sem = stats.sem([ed_scoring_value(guess, outcome) for outcome in simulated_outcomes])
+    # We don't score the "Any Other XXX" outcomes
+    SCOREABLE_OUTCOMES = [o for o in OUTCOMES if not o.startswith("Any Other")]
 
-            expected_value[guess] = {"mean": mean_ev, "upper": mean_ev + 2 * sem, "lower": mean_ev - 2 * sem}
+    for guess in SCOREABLE_OUTCOMES:
+        scores = np.array([ed_scoring_value(guess, outcome) for outcome in simulated_outcomes])
+        _mean = np.float32(np.mean(scores))
+        _sem = np.float32(stats.sem(scores))
+        expected_value[guess] = {"mean": _mean, "upper": _mean + 2 * _sem, "lower": _mean - 2 * _sem}
 
     return expected_value
 
 
-def calculate_expected_score(suggested_predictions, match_values):
+def calculate_expected_score(suggested_predictions: SuggestedPredictions, match_values: MatchValues):
+    """
+    Given a set of "suggestions", print out what the EV is from this set.
+    """
     return sum([val[suggested_predictions[match]]["mean"] for match, val in match_values.items()])
