@@ -1,4 +1,7 @@
+import pandas as pd
+
 from src.betfair import BetfairClient
+from src.config import FINAL_COLUMN_ORDER
 from src.get_odds import get_matches, get_odds
 from src.logger import get_logger
 from src.parsing import compile_suggested_predictions, parse_fixtures
@@ -18,9 +21,10 @@ if __name__ == "__main__":
     # Fetch Betfair information
     client = BetfairClient()
     matches = get_matches(client, fixtures_list=parsed_fixtures)
-    df = get_odds(client, matches)
+    odds = get_odds(client, matches)
 
     # Simulate outcomes
+    df = pd.DataFrame(odds).T[FINAL_COLUMN_ORDER]
     suggested_predictions, match_values = get_expected_values(df)
 
     # Compile predictions and save
