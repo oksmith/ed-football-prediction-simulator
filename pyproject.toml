@@ -8,6 +8,7 @@ dependencies = [
     "betfairlightweight>=2.23.2",
     "numpy>=2.5.0",
     "pandas>=3.0.3",
+    "pydantic>=2.13.4",
     "pyyaml>=6.0.3",
     "scipy>=1.18.0",
 ]

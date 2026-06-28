@@ -1,7 +1,33 @@
-# Team abbreviation → full name
-# Multiple abbreviations per team are intentional — they reflect
-# different source formats encountered in historical data.
+# Only fetch odds from these competitions. It's worth tweaking this to make
+# sure the odds-fetching from Betfair is as lightweight as possible.
+competitions:
+  - English Premier League
+  # - English Championship
+  # - English FA Cup
+  # - English Football League Cup
+  # - EFL Trophy
+  # - English League 1
+  # - English League 2
+  # - UEFA Champions League
+  # - UEFA Europa League
+  # - UEFA Europa Conference League
+  # - UEFA Super Cup
+  # - UEFA Europa League Qualifiers
+  # - UEFA Nations League
+  - FIFA World Cup
+  # - FIFA World Cup Qualifiers
+  # - FIFA World Cup Qualifiers - Europe
+  # - UEFA Euro 2020
+  # - Scottish Premiership
+  # - Italian Serie A
+  # - Spanish La Liga
+  # - Spanish Copa del Rey
 
+
+# The following config block contains Team Code to Full Name mapping.
+# Team code comes from Ed's message in Whatsapp. Sometimes the codes are historically inconsistent, as
+# you'll see reflected in the config below.
+# Full names are needed because that's how Betfair lists them on their website and on the API.
 teams:
   ARS:   Arsenal
   VIL:   Aston Villa
@@ -350,26 +376,3 @@ teams:
   S.AFR:  South Africa
   CVRD:   Cape Verde
   C.VRD:  Cape Verde
-
-competitions:
-  - English Premier League
-  # - English Championship
-  # - English FA Cup
-  # - English Football League Cup
-  # - EFL Trophy
-  # - English League 1
-  # - English League 2
-  # - UEFA Champions League
-  # - UEFA Europa League
-  # - UEFA Europa Conference League
-  # - UEFA Super Cup
-  # - UEFA Europa League Qualifiers
-  # - UEFA Nations League
-  - FIFA World Cup
-  # - FIFA World Cup Qualifiers
-  # - FIFA World Cup Qualifiers - Europe
-  # - UEFA Euro 2020
-  # - Scottish Premiership
-  # - Italian Serie A
-  # - Spanish La Liga
-  # - Spanish Copa del Rey
